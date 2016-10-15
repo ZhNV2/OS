@@ -8,10 +8,11 @@
 	.code32
 	.global start32
 	.extern main
-
+	.extern handlerMemMap
 
 	.align 16
 start32:
+	movl %ebx, %esi
 	jmp 1f
 
 
@@ -55,6 +56,8 @@ stack_top:
 
 1:
 	movl $stack_top, %esp
+
+	
 	pushl %eax
 	call videomem_clrscr
 	popl %eax
@@ -223,6 +226,8 @@ start64:
 	movabsq $bootstrap_stack_top, %rax
 	movq %rax, %rsp
 
+	#push %rsi
+	mov %rsi, %rdi
 	cld
 	movabsq $main, %rax
 	call *%rax

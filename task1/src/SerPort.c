@@ -43,6 +43,31 @@ void printInt(uint64_t x) {
 	if (r == 0) printChar('0');
 }
 
+void debug(char *str, uint64_t x) {
+	printStr(str);
+	printStr(":");
+	printlnInt(x);
+}
+
+void printlnInt(uint64_t x) {
+	printInt(x);
+	printChar('\n');
+}
+void printlnStr(char *str) {
+	printStr(str);
+	printChar('\n');
+}
+
+void printIntHex(uint64_t x) {
+	int a[16];
+	for (int i = 0; i < 16; i++) {
+		a[i] = x % 16;
+		x /= 16;
+	}
+	printStr("0x");
+	for (int i = 16 - 1; i >= 0; i--)
+		printChar(a[i] < 10 ? '0' + a[i] : 'a' + (a[i] - 10));
+}
 void printIntBin(uint64_t x) {
 	int a[64];
 	for (int i = 0; i < 64; i++) {
