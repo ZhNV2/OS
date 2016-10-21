@@ -7,8 +7,10 @@
 #include <ioport.h>
 #include <memory.h>
 
+#define ADDR_SHIFT ((((uint64_t)1 << 17) - 1) << 47)
 #define MASTER_BEGIN 32
 #define bit(x) (1 << (x))
+#define PHYS_PAGE_SIZE (1 << 12)
 
 //serial port
 void setupPort();
@@ -37,7 +39,11 @@ void PITsetup();
 #define NULL 0
 #define MAX_NUM_OF_REGIONS 10
 struct memRegion { uint32_t begin, end; };
-void initAllocators(uint32_t *);
+void initMemRegions(uint32_t *);
+
+
+//general
+uint64_t align(uint64_t addr, uint64_t need); 
 
 #endif  /* __GENERAL_H__ */
 

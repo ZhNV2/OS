@@ -3,7 +3,7 @@
 #include "general.h"
 
 typedef struct node {
-	uint32_t begin;
+	uint64_t begin;
 	struct node *next, *prev;
 } Node;
 

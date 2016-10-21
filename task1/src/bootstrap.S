@@ -8,11 +8,11 @@
 	.code32
 	.global start32
 	.extern main
-	.extern handlerMemMap
+
 
 	.align 16
 start32:
-	movl %ebx, %esi
+	mov %ebx, %esi
 	jmp 1f
 
 
@@ -56,8 +56,6 @@ stack_top:
 
 1:
 	movl $stack_top, %esp
-
-	
 	pushl %eax
 	call videomem_clrscr
 	popl %eax
@@ -138,6 +136,7 @@ setup_mapping:
 	movl $(bootstrap_pml4 - VIRTUAL_BASE), %edi
 	movl $(bootstrap_pml3 - VIRTUAL_BASE + PTE_PRESENT + PTE_WRITE), %eax
 	movl %eax, (%edi)
+	movl %eax, 2048(%edi)
 	movl %eax, 4088(%edi)
 
 	movl %cr4, %eax
@@ -226,9 +225,8 @@ start64:
 	movabsq $bootstrap_stack_top, %rax
 	movq %rax, %rsp
 
-	#push %rsi
-	mov %rsi, %rdi
 	cld
+	mov %rsi, %rdi
 	movabsq $main, %rax
 	call *%rax
 

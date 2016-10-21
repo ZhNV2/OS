@@ -93,7 +93,7 @@ int eraseCoreCode() {
 	return cntRegions;
 }
 
-void initAllocators(uint32_t *ebx) {
+void initMemRegions(uint32_t *ebx) {
 	cntRegions = handlerMemMap(ebx);
 	
 	printStr("After memmap's processing:\n");
