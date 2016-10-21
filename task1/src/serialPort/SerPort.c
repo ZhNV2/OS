@@ -1,4 +1,4 @@
-#include "general.h"
+#include "../general.h"
 
 void setupPort() {
 	unsigned short basePort = 0x3f8;

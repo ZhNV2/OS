@@ -1,4 +1,4 @@
-#include "general.h"
+#include "../general.h"
 
 #define ITER_AMOUNT 41
 
