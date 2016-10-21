@@ -1,4 +1,4 @@
-#include "general.h"
+#include "../general.h"
 
 const uint8_t PITCom = 0x43;
 const uint8_t PITData = 0x40;

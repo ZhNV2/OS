@@ -2,7 +2,7 @@
 #define __BUDDY_DESC_H__
 
 #include "buddy_node.h"
-#include "general.h"
+#include "../general.h"
 
 typedef struct descriptor {
 	Node *node;

@@ -1,8 +1,8 @@
 #ifndef __SLAB_H__
 #define __SLAB_H__
 
-#include "general.h"
-#include "buddy.h"
+#include "../general.h"
+#include "../buddy/buddy.h"
 
 
 /* Every Slab has this structure in memory:

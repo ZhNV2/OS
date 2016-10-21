@@ -8,12 +8,11 @@ CFLAGS := -g -m64 -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -ffreestanding \
 LFLAGS := -nostdlib -z max-page-size=0x1000
 
 INC := ./inc
-SRC := ./src
 
-C_SOURCES := $(wildcard $(SRC)/*.c)
+C_SOURCES := $(wildcard $(shell find . -name "*.c"))
 C_OBJECTS := $(C_SOURCES:.c=.o)
 C_DEPS := $(C_SOURCES:.c=.d)
-S_SOURCES := $(wildcard $(SRC)/*.S)
+S_SOURCES := $(wildcard $(shell find . -name "*.S"))
 S_OBJECTS := $(S_SOURCES:.S=.o)
 S_DEPS := $(S_SOURCES:.S=.d)
 

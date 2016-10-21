@@ -1,8 +1,8 @@
 #include "general.h"
-#include "buddy.h"
-#include "slab.h"
-#include "paging.h"
-#include "test.h"
+#include "buddy/buddy.h"
+#include "slab/slab.h"
+#include "mapping/paging.h"
+#include "test/test.h"
 
 
 uint64_t align(uint64_t addr, uint64_t need) {

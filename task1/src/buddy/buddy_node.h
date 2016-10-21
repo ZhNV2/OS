@@ -1,6 +1,6 @@
 #ifndef __BUDDY_NODE_H__
 #define __BUDDY_NODE_H__
-#include "general.h"
+#include "../general.h"
 
 typedef struct node {
 	uint64_t begin;

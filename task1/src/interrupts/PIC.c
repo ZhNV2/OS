@@ -1,4 +1,4 @@
-#include "general.h"
+#include "../general.h"
 
 const uint8_t MasterCom = 0x20;
 const uint8_t MasterData = 0x21;

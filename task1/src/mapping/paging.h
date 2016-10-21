@@ -1,8 +1,8 @@
 #ifndef __PAGING_H__
 #define __PAGING_H__
 
-#include "general.h"
-#include "buddy.h"
+#include "../general.h"
+#include "../buddy/buddy.h"
 
 #define TABLE_ENTRY_SIZE 8
 #define GB (1LL << 30)

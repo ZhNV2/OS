@@ -3,7 +3,7 @@
 
 #include "buddy_node.h"
 #include "buddy_desc.h"
-#include "general.h"
+#include "../general.h"
 
 #define MAX_ORDER 20
 

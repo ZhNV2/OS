@@ -1,9 +1,9 @@
 #ifndef __TEST_H__
 #define __TESH_H__
 
-#include "general.h"
-#include "buddy.h"
-#include "slab.h"
+#include "../general.h"
+#include "../buddy/buddy.h"
+#include "../slab/slab.h"
 
 void testBuddyAllocator_1();
 void testBuddyAllocator_2();
