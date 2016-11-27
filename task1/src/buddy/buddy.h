@@ -3,12 +3,15 @@
 
 #include "buddy_node.h"
 #include "buddy_desc.h"
+#include "../threads/thread.h"
 #include "../general.h"
 
 #define MAX_ORDER 20
 
 extern struct memRegion memRegions[];
 extern int cntRegions;
+
+spinlock BUDDY_LOCK;
 
 typedef struct buddyAllocator {
 	int used;

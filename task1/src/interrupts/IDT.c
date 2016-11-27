@@ -43,7 +43,7 @@ void IDTsetup() {
 		IDT[i].offset1 = tbl[i] & ((1 << 16) - 1);
 		IDT[i].offset2 = (tbl[i] >> 16) & ((1 << 16) - 1);
 		IDT[i].offset3 = (tbl[i] >> 32);
-		IDT[i].P_type = bit(7) + bit(3) + bit(2) + bit(1) + bit(0); // P = 1 && type == 0b1110
+		IDT[i].P_type = bit(7) +bit(3)	 + bit(2) + bit(1) + bit(0); // P = 1 && type == 0b1110
 	}
 	lidt((uint64_t)IDT, sizeof(IDT) - 1);					
 }

@@ -3,6 +3,11 @@
 
 #include "../general.h"
 #include "../buddy/buddy.h"
+#include "../threads/thread.h"
+
+
+spinlock SLAB_LOCK;
+spinlock INIT_SLAB_LOCK;
 
 
 /* Every Slab has this structure in memory:
@@ -23,6 +28,8 @@ uint64_t allocLogical(uint64_t slab);
 void freeLogical(uint64_t slab, uint64_t toFree);
 
 void freeSlab(uint64_t slab);
+
+void initSlabAllocator();	
 
 
 #endif // __SLAB_H__

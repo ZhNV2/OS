@@ -19,7 +19,7 @@ void printStr(char *);
 void printInt(uint64_t);
 void printlnInt(uint64_t);
 void debug(char *, uint64_t);
-void printlnStr();
+void printlnStr(char *str);
 void printIntBin(uint64_t);
 void printIntHex(uint64_t);
 

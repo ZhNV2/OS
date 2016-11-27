@@ -74,6 +74,7 @@ void init(int i) {
 	Node bigBlock = nullNode();
 	bigBlock.begin = buddyAllocators[i].memBegin;
 	addToList(i, buddyAllocators[i].maxOrder, bigBlock);
+
 }
 
 void addToList(int i, int listNum, Node node) {
@@ -102,6 +103,7 @@ void eraseFromList(int i, int listNum, Node *toDelete) {
 	buddyAllocators[i].stackTop--;
 }
 static uint64_t alloc(int i, int ord) {
+	lock(&BUDDY_LOCK);
 	for (int lvl = ord; lvl <= buddyAllocators[i].maxOrder; lvl++) {
 		if (buddyAllocators[i].ordList[lvl] != NULL) {
 			for (int curLvl = lvl; curLvl > ord; curLvl--) {
@@ -118,14 +120,16 @@ static uint64_t alloc(int i, int ord) {
 			uint64_t beg = cur->begin;
 			eraseFromList(i, ord, cur);
 		
-	
-			 return beg;
+			unlock(&BUDDY_LOCK);
+			return beg;
 		}
 	}
+	unlock(&BUDDY_LOCK);
 	return NULL;
 }
 
 static void free(int i, uint64_t addr, int ord) {
+	lock(&BUDDY_LOCK);
 	Node cur = nullNode();
 	cur.begin = addr;
 	for (int lvl = ord; lvl <= buddyAllocators[i].maxOrder; lvl++) {
@@ -145,6 +149,8 @@ static void free(int i, uint64_t addr, int ord) {
 			cur = tmp; 
 		}
 	}	
+	unlock(&BUDDY_LOCK);
+	
 }
 
 uint64_t allocPhys(uint64_t size) {

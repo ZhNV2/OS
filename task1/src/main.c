@@ -22,6 +22,7 @@ void initInterrupts() {
 	enable_ints();
 	printStr("PIT\n");
 	PITsetup();
+	disablePICInts();
 }
 
 
@@ -33,6 +34,7 @@ void test() {
 	testSlab_1(4000, 100);
 	testSlab_2(10);
 	testSlab_2(3009);
+	testScheduler();
 }
 
 void main(uint32_t ebx)
@@ -47,14 +49,17 @@ void main(uint32_t ebx)
 	initMemRegions((uint32_t *)(uint64_t)ebx);
 	
 	initBuddyAllocator();
+	initSlabAllocator();
 	
 	initNewPaging();	
+
+	
+	initInterrupts();
 
 	test();
 
 
 	
 	
-	//initInterrupts();
 	while(1);
 }

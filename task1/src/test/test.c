@@ -94,3 +94,69 @@ void testSlab_2(int varSize) {
 	}
 	return ;
 }
+
+void run1(void);
+void run2(void);
+
+int run1ThreadId;
+int run2ThreadId;
+void testScheduler() {
+	printlnStr("--------------test Scheduler----------------");
+	initScheduler();
+	run1ThreadId = addThread(run1);
+	run2ThreadId = addThread(run2);
+	printlnStr("runScheduler:");
+	runScheduler();
+	printlnStr("----------finished testScheduler------------");
+}
+
+
+int tmpCnt1;
+int tmpCnt2;
+
+#define ITER 50000000
+
+
+void run1(void) {
+	printlnStr("Start run1");
+	
+	for (;tmpCnt1 < ITER; tmpCnt1++) {
+		if (tmpCnt1 % (ITER / 10) == 0) {
+			//get();
+			printStr("run1 tmpCnt1=");
+			printlnInt(tmpCnt1);
+
+			if (tmpCnt1 < ITER / 2) {
+				Resp toSwitch = toRun(0);
+				switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
+			} else {
+				join(run2ThreadId);
+			}
+			
+			
+		}
+	}
+	closeThread(run1ThreadId);
+}
+
+void run2(void) {
+	printlnStr("Start run2");
+	for (;tmpCnt2 < ITER; tmpCnt2++) {
+		if (tmpCnt2 % (ITER / 10) == 0) {
+			printStr("run2 tmpCnt2=");
+			printlnInt(tmpCnt2);
+
+			if (tmpCnt2 < ITER / 2) {
+				Resp toSwitch = toRun(0);
+				switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
+
+			} else {
+
+			}
+			
+			
+
+		}
+	}
+	closeThread(run2ThreadId);
+}
