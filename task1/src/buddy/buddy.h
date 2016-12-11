@@ -11,8 +11,6 @@
 extern struct memRegion memRegions[];
 extern int cntRegions;
 
-spinlock BUDDY_LOCK;
-
 typedef struct buddyAllocator {
 	int used;
 	int maxOrder;

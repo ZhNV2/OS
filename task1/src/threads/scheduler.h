@@ -17,7 +17,6 @@ int pop();
 
 
 #define STACK_SIZE 1000
-uint64_t stackSlab;
 
 
 #define ALIVE 1

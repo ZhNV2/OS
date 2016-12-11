@@ -1,6 +1,7 @@
 #include "buddy.h"
 
 BuddyAllocator buddyAllocators[MAX_NUM_OF_REGIONS];
+spinlock BUDDY_LOCK;
 
 
 //desc functions

@@ -11,6 +11,7 @@ int threadCnt;
 int threadStatus[MAX_NUM_THREADS];
 uint64_t stackPointer[MAX_NUM_THREADS];
 uint64_t mainStackPointer;
+uint64_t stackSlab;
 
 int inc(int pointer) {
 	return pointer + 1 == MAX_NUM_THREADS ? 0 : pointer + 1;
@@ -39,7 +40,7 @@ int addThread(void (*runThread)(void)) {
 	threadStatus[threadCnt] = ALIVE;
 
 
-	stackPointer[threadCnt] = allocLogical(stackSlab) + 500;
+	stackPointer[threadCnt] = allocLogical(stackSlab) + STACK_SIZE;
 	for (int i = 0; i < 7; i++)
 		*(uint64_t*)(stackPointer[threadCnt] + i * 8) = 0;
 	*(uint64_t*)(stackPointer[threadCnt] + 7 * 8) = (uint64_t)runThread;
@@ -65,6 +66,7 @@ void runScheduler() {
 	Resp toSwitch;
 	toSwitch = toRun(1);
 	switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
+	freeSlab(stackSlab);
 }
 
 

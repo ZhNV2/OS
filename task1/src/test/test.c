@@ -68,12 +68,15 @@ void testSlab_1(int varSize, int it) {
 	printlnStr("----");
 	uint64_t slab = initSlab(varSize);
 	printlnInt(slab - ADDR_SHIFT);
-
+	printlnStr("FF");
 	for (int i = 0; i < it; i++) {
 		uint64_t ne = allocLogical(slab);
 		ne = ne + 1;
-	 }
-	 freeSlab(slab);
+	}
+	printlnStr("FF");
+	freeSlab(slab);
+	printlnStr("FF");
+
 }
 
 void testSlab_2(int varSize) {

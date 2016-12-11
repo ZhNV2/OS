@@ -5,9 +5,8 @@
 #include "../buddy/buddy.h"
 #include "../threads/thread.h"
 
+#define MAX_NUM_SLABS 1000
 
-spinlock SLAB_LOCK;
-spinlock INIT_SLAB_LOCK;
 
 
 /* Every Slab has this structure in memory:
