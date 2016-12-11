@@ -25,7 +25,7 @@ typedef struct buddyAllocator {
 
 
 
-BuddyAllocator buddyAllocators[MAX_NUM_OF_REGIONS];
+
 
 int getDescNum(int i, uint64_t addr);
 
