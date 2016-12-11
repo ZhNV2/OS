@@ -5,9 +5,16 @@
 #include "../buddy/buddy.h"
 #include "../threads/thread.h"
 
-#define MAX_NUM_SLABS 1000
+struct SlabS {
+	uint64_t freeVar;
+	uint64_t varSize;
+	uint64_t nextSlab;
+	uint64_t slabSize;
+	spinlock lock;
+	
+}__attribute__((packed));
 
-
+typedef struct SlabS Slab;
 
 /* Every Slab has this structure in memory:
 

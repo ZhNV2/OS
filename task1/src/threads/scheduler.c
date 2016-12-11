@@ -35,12 +35,15 @@ void initScheduler() {
 
 
 int addThread(void (*runThread)(void)) {
+	if (threadCnt == MAX_NUM_THREADS) {
+		return -1;
+	}
 	push(threadCnt);
 	threadCode[threadCnt] = runThread;
 	threadStatus[threadCnt] = ALIVE;
 
 
-	stackPointer[threadCnt] = allocLogical(stackSlab) + STACK_SIZE;
+	stackPointer[threadCnt] = allocLogical(stackSlab) + STACK_SIZE - 8;
 	for (int i = 0; i < 7; i++)
 		*(uint64_t*)(stackPointer[threadCnt] + i * 8) = 0;
 	*(uint64_t*)(stackPointer[threadCnt] + 7 * 8) = (uint64_t)runThread;
