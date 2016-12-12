@@ -3,8 +3,6 @@
 
 
 spinlock INIT_SLAB_LOCK;
-int freeId;
-
 
 void initSlabAllocator() {
 }
@@ -27,9 +25,6 @@ uint64_t initSlab(uint64_t varSize) {
 	slab.slabSize = slabSize;
 	spinlock lock;
 	slab.lock = lock;
-	// *(uint64_t *)(slab + 8) = varSize;
-	// *(uint64_t *)(slab + 16) = 0;
-	// *(uint64_t *)(slab + 24) = slabSize;
 	uint64_t varBegin = align(slabAddress + sizeof(Slab), varSize);
 	slab.freeVar = varBegin;
 	//*(uint64_t *)slab = varBegin;
@@ -43,7 +38,6 @@ uint64_t initSlab(uint64_t varSize) {
 		curVar += varSize;
 	} 
 	*(Slab *)(uint64_t *)slabAddress = slab;
-	//printlnInt(slab);
 	unlock(&INIT_SLAB_LOCK);	
 	return slabAddress;
 }
@@ -66,13 +60,11 @@ uint64_t allocLogical(uint64_t slabAddress) {
 	if (freeVar == 0) {
 		uint64_t newSlab = initSlab(varSize);
 		slab->nextSlab = newSlab;
-		//*(uint64_t *)(slab + 16) = slabAddress[newSlab];
 		slabAddress = newSlab;
 		slab = getSlabStruct(slabAddress);
 		freeVar = slab->freeVar;
 	} 
 	slab->freeVar = *(uint64_t *)freeVar;
-	//*(uint64_t *)slab = *(uint64_t *)freeVar;
 	unlock(lock_);
 	return freeVar;
 }
