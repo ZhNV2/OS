@@ -131,7 +131,7 @@ void run1(void) {
 
 			if (tmpCnt1 < ITER / 2) {
 				Resp toSwitch = toRun(0);
-				switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
+				safe_switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
 			} else {
 				join(run2ThreadId);
 			}
@@ -151,7 +151,7 @@ void run2(void) {
 
 			if (tmpCnt2 < ITER / 2) {
 				Resp toSwitch = toRun(0);
-				switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
+				safe_switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
 
 			} else {
 
