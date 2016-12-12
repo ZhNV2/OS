@@ -33,6 +33,8 @@ void interrupt();
 
 void switch_threads(uint64_t prev, uint64_t next);
 
+void safe_switch_threads(uint64_t prev, uint64_t next);
+
 typedef struct resp {
 	uint64_t *prev;
 	uint64_t next;

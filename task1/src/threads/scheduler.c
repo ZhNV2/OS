@@ -14,6 +14,11 @@ uint64_t stackPointer[MAX_NUM_THREADS];
 uint64_t mainStackPointer;
 uint64_t stackSlab;
 
+void safe_switch_threads(uint64_t prev, uint64_t next) {
+	if (*(uint64_t *)prev == next) return;
+	switch_threads(prev, next);
+
+}
 int inc(int pointer) {
 	return pointer + 1 == MAX_NUM_THREADS ? 0 : pointer + 1;
 }
@@ -51,7 +56,7 @@ int addThread(void (*runThread)(void)) {
 	threadStatus[curThread] = ALIVE;
 
 
-	stackPointer[curThread] = allocLogical(stackSlab) + STACK_SIZE - 8;
+	stackPointer[curThread] = allocLogical(stackSlab) + STACK_SIZE - 8 * 8;
 	for (int i = 0; i < 7; i++)
 		*(uint64_t*)(stackPointer[curThread] + i * 8) = 0;
 	*(uint64_t*)(stackPointer[curThread] + 7 * 8) = (uint64_t)runThread;
@@ -64,13 +69,13 @@ void closeThread(int thread_id) {
 	freeThreads[freeThread++] = thread_id;
 	freeLogical(stackSlab, stackPointer[thread_id] - stackPointer[thread_id] % STACK_SIZE);
 	Resp toSwitch = toRun(0);
-	switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
+	safe_switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
 }
 
 void join(int thread_id) {
 	while (threadStatus[thread_id] != CLOSED) {
 		Resp toSwitch = toRun(0);
-		switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
+		safe_switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
 	}
 }
 
@@ -78,8 +83,11 @@ void join(int thread_id) {
 void runScheduler() {
 	Resp toSwitch;
 	toSwitch = toRun(1);
-	switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
+	safe_switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
 	freeSlab(stackSlab);
+	if (freeThread != MAX_NUM_THREADS) {
+		printlnStr("kek");
+	}
 }
 
 
@@ -99,7 +107,7 @@ Resp toRun(int isBegging) {
 		return res;
 	}	
 
-	switch_threads((uint64_t)&stackPointer[currentThread], mainStackPointer);
+	safe_switch_threads((uint64_t)&stackPointer[currentThread], mainStackPointer);
 	return res;
 }
 

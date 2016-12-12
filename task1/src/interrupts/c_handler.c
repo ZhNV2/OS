@@ -14,7 +14,7 @@ void c_handler(uint64_t *rsp) {
 		
 		Resp toSwitch = toRun(0);
 		if (MASTER_BEGIN <= no && no < MASTER_BEGIN + 8) EOI(no - MASTER_BEGIN);
-		switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
+		safe_switch_threads((uint64_t)toSwitch.prev, toSwitch.next);
 	} else {
 		printStr("Skip Interrupt number:");
 		printInt(no);
